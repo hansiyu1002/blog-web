@@ -1,0 +1,4 @@
+# Project exclude paths
+/api/node_modules/
+/ui/node_modules/
+/ui/public/
