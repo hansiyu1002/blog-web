@@ -1,25 +1,20 @@
 import { createSlice } from '@reduxjs/toolkit';
-import api from '../services/api';
+import { apiSlice } from '../services/apiSlice';
 
-const initialState = {
-    value: 0,
-}
+const initialState = {}
 
 export const userSlice = createSlice({
     name: 'user',
     initialState,
     extraReducers: (builder) => {
-        builder.addMatcher(api.endpoints.signupUser.matchFulfilled, (state, { payload }) => {
-            state.user = payload.user;
-            state.token = payload.token;
+        builder.addMatcher(apiSlice.endpoints.signupUser.matchFulfilled, (state, { payload }) => {
+            return payload;
         });
-        builder.addMatcher(api.endpoints.loginUser.matchFulfilled, (state, { payload }) => {
-            state.user = payload.user;
-            state.token = payload.token;
+        builder.addMatcher(apiSlice.endpoints.loginUser.matchFulfilled, (state, { payload }) => {
+            return payload;
         });
-        builder.addMatcher(api.endpoints.logoutUser.matchFulfilled, (state) => {
-            delete state.user;
-            delete state.token;
+        builder.addMatcher(apiSlice.endpoints.logoutUser.matchFulfilled, (state) => {
+            return {};
         });
     }
 })

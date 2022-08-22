@@ -28,7 +28,6 @@ router.get('/all', async (req, res) => {
 router.get('/mine', authUser, async (req, res) => {
     try {
         const user = req.user;
-        console.log(user)
         user.populate('blogs').then(({blogs}) => {
             res.json(blogs)
         });
@@ -41,11 +40,31 @@ router.get('/:id', async (req, res) => {
    const { id } = req.params;
    try {
        const blog = await Blog.findById(id);
-       console.log(blog)
        blog.populate('author').then(result => {
-           console.log(result)
            res.json(result)
        });
+   } catch (e) {
+       res.status(400).json(e.message);
+   }
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id } = req.params;
+    try {
+        const blog = await Blog.findById(id);
+        await blog.remove();
+        res.status(200).send();
+    } catch (e) {
+        res.status(400).json(e.message);
+    }
+});
+
+router.patch('/:id', async (req, res) => {
+   const { id } = req.params;
+   const { title, content } = req.body;
+   try {
+       const blog = await Blog.findByIdAndUpdate(id, {title, content});
+       res.status(200).send();
    } catch (e) {
        res.status(400).json(e.message);
    }

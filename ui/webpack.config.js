@@ -2,7 +2,7 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: { app: ['./src/index.jsx'] },
+    entry: { app: ['./src/index.js'] },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'public')
@@ -25,6 +25,11 @@ module.exports = {
         ],
     },
     resolve: {
-        extensions: ['.js', '.jsx']
+        extensions: [".js", ".json", ".jsx", ".css"]
+    },
+    devServer: {
+        port: 8000,
+        open: true,
+        hot: true
     }
 };

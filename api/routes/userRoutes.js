@@ -2,7 +2,6 @@ const router = require('express').Router();
 const User = require('../models/User')
 const authUser = require('../middleware/authUser')
 
-// /users/signup
 router.post('/signup', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -14,7 +13,6 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// /users/login
 router.post('/login', async (req, res) => {
     const { email, password } = req.body;
     try {
@@ -26,7 +24,6 @@ router.post('/login', async (req, res) => {
     }
 })
 
-// /user/logout
 router.delete('/logout', authUser, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((tokenObject) => tokenObject.token !== req.token);
